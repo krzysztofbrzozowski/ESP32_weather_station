@@ -6,7 +6,7 @@ import json
 from io import BytesIO
 
 
-with open('./api_key', 'r', encoding='utf-8') as file:
+with open(r'/Users/krzysztofbrzozowski/Documents/PROJECTS/SOFTWARE/ESP32_weather_station.nosync/vrtual_target/api_key', 'r', encoding='utf-8') as file:
     APIKEY = file.read()
 
 API = 'airapi.airly.eu'
@@ -21,17 +21,20 @@ connection = http.client.HTTPSConnection(API, context = ssl._create_unverified_c
 connection.request('GET', API_URL, headers = HEADERS)
 response = connection.getresponse()
 
-gzip_file = gzip.GzipFile(fileobj=response)
+# gzip_file = gzip.GzipFile(fileobj=response)
 
-response = ''
+# response = ''
 
-while chunk := gzip_file.read(1024):
-    # print(chunk)
-    response += chunk.decode('utf-8')
-    # response += bytearray(chunk)
+# while chunk := gzip_file.read(1024):
+#     # print(chunk)
+#     response += chunk.decode('utf-8')
+#     # response += bytearray(chunk)
 
-data = json.loads(response)
-print(data)
+# data = json.loads(response)
+# print(data)
+
+with open("response.gz", "wb") as f:
+    f.write(response.content)
 
 if __name__ == '__main__':
     pass
