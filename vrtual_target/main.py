@@ -21,20 +21,17 @@ connection = http.client.HTTPSConnection(API, context = ssl._create_unverified_c
 connection.request('GET', API_URL, headers = HEADERS)
 response = connection.getresponse()
 
-# gzip_file = gzip.GzipFile(fileobj=response)
+gzip_file = gzip.GzipFile(fileobj=response)
 
-# response = ''
+response = ''
 
-# while chunk := gzip_file.read(1024):
-#     # print(chunk)
-#     response += chunk.decode('utf-8')
-#     # response += bytearray(chunk)
+while chunk := gzip_file.read(1024):
+    # print(chunk)
+    response += chunk.decode('utf-8')
+    # response += bytearray(chunk)
 
-# data = json.loads(response)
-# print(data)
-
-with open("response.gz", "wb") as f:
-    f.write(response.content)
+data = json.loads(response)
+print(data)
 
 if __name__ == '__main__':
     pass

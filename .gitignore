@@ -3,3 +3,4 @@ api_key
 virtual_target/api_key
 physical_target/settings.toml
 ESP32_bckp
+*gz
