@@ -29,6 +29,9 @@ APIKEY = os.getenv("API_KEY")
 SSID = os.getenv("CIRCUITPY_WIFI_SSID")
 PASSWORD = os.getenv("CIRCUITPY_WIFI_PASSWORD")
 
+TIME_BETWEEN_REFRESHES = 1 * 60 * 60  # once a day delay
+# TIME_BETWEEN_REFRESHES = 15
+
 # Initalize Wifi, Socket Pool, Request Session
 pool = adafruit_connection_manager.get_radio_socketpool(wifi.radio)
 ssl_context = adafruit_connection_manager.get_radio_ssl_context(wifi.radio)
@@ -77,7 +80,7 @@ def deflate_data(compressed_content):
         text_to_display = ""
 
         t = current_time_isodate
-        text_to_display += f"{t.hour}:{t.minute} {t.day}.{t.month}.{t.year}\n"
+        text_to_display += f"{t.hour}:{t.minute}:{t.second} {t.day}.{t.month}.{t.year}\n"
 
         for item in current_values:
             text_to_display += f"{item['name']}: {item['value']}\n"
@@ -90,7 +93,7 @@ def deflate_data(compressed_content):
     except Exception as e:
         print(e)
 
-while True:
-    content = get_data()
-    deflate_data(content)
-    time.sleep(60 * 10)
+# Code execution
+content = get_data()
+deflate_data(content)
+magtag.exit_and_deep_sleep(TIME_BETWEEN_REFRESHES)
